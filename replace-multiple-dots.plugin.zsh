@@ -1,12 +1,16 @@
 #!/usr/bin/env zsh
 
-function replace_multiple_dots() {
-  local dots=$LBUFFER[-2,-1]
-  if [[ $dots == ".." ]]; then
+__replace_multiple_dots() {
+  if [[ "$LBUFFER" =~ '(^|[/ ])\.\.$' ]]; then
     LBUFFER=$LBUFFER[1,-3]'../.'
   fi
   zle self-insert
 }
+__insert_dot() {
+    LBUFFER+='.'
+}
 
-zle -N replace_multiple_dots
-bindkey "." replace_multiple_dots
+zle -N __replace_multiple_dots
+zle -N __insert_dot
+bindkey "." __replace_multiple_dots
+bindkey "^X." __insert_dot
