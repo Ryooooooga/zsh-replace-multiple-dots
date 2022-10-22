@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 __replace_multiple_dots() {
-  if [[ "$LBUFFER" =~ '(^|[/ ])\.\.$' ]]; then
+  if [[ "$LBUFFER" =~ '(^|[/ ])\.\.$' ]] && [[ ! "$LBUFFER" =~ "${REPLACE_MULTIPLE_DOTS_IGNORE:-^$}" ]]; then
     LBUFFER=$LBUFFER[1,-3]'../.'
   fi
   zle self-insert
